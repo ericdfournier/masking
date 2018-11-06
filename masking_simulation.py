@@ -150,6 +150,7 @@ def DataPlot(data, categories, largeUserCat):
     ludata = data[data[:,0] == lucat,:]
     data = data[data[:,0] != lucat,:]
     c = data[:,1]
+    plt.figure(figsize=(10,10))
     gs = gridspec.GridSpec(1, 2, width_ratios=[6, 1])
     ax0 = plt.subplot(gs[0])
     ax1 = plt.subplot(gs[1])
@@ -217,10 +218,10 @@ def DataDiagnostics(data, categories, largeUserCat):
 ############################################################################### 
 
 seed = 123456                       # Random number seed
-n = 100000     
+n = 100000                          # Simulation realizations
 mu = [2.0, 2.0]                     # Mean vector
 sigma = [[1.0, 0.5], 
-         [0.5, 0.01]]               # Number of sample accounts to simulate
+         [0.5, 0.01]]               # Covariance Matrix
 categories = {1.0: 'single_family',
               2.0: 'multi_family',
               3.0: 'condo',
@@ -243,7 +244,7 @@ DataDiagnostics(data, categories, largeUserCat)
 #               CLEAN OUT LARGE USERS AND PERFORM DIAGNOSTICS                 # 
 ############################################################################### 
 
-print('\n-----Extract Large Users into Separate Category-----\n')
+print('\n-----Extract Large Users -----\n')
 clean = LargeUserCategoryExtraction(data, categories, largeUserCat)
 DataDiagnostics(clean, categories, largeUserCat)
 
@@ -252,6 +253,6 @@ DataDiagnostics(clean, categories, largeUserCat)
 #               FILL OUT LARGE USERS AND PERFORM DIAGNOSTICS                  # 
 ############################################################################### 
 
-print('\n-----Fill Large User Category to Prevent Masking-----\n')
+print('\n-----Fill Large User Group-----\n')
 clean_fill = LargeUserCategoryFill(clean, categories, largeUserCat)
 DataDiagnostics(clean_fill, categories, largeUserCat)
